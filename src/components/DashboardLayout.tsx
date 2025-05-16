@@ -18,7 +18,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role = "wri
       role === "admin" && "admin-gradient"
     )}>
       <MainSidebar />
-      <main className="flex-1 p-6 overflow-auto">
+      <main className="flex-1 p-6 overflow-auto font-inter">
         {children}
       </main>
     </div>
