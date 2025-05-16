@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -26,11 +25,11 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				primary: {
-					DEFAULT: 'hsl(var(--primary))',
+					DEFAULT: '#c42127',
 					foreground: 'hsl(var(--primary-foreground))'
 				},
 				secondary: {
-					DEFAULT: 'hsl(var(--secondary))',
+					DEFAULT: '#41434d',
 					foreground: 'hsl(var(--secondary-foreground))'
 				},
 				destructive: {
@@ -56,14 +55,14 @@ export default {
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
+					primary: '#c42127',
 					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
 					accent: 'hsl(var(--sidebar-accent))',
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Custom color palette
+				// Custom color palette - Updated to match brand guidelines
 				"theme-red": "#c42127",
 				"theme-black": "#41434d",
 				writer: {
@@ -135,6 +134,7 @@ export default {
 			},
 			fontFamily: {
 				'playfair': ['Playfair Display', 'serif'],
+				'futura': ['Futura Bk BT', 'Futura', 'sans-serif'],
 				'inter': ['Inter', 'sans-serif']
 			},
 		}

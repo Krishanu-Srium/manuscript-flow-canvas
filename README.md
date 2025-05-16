@@ -1,73 +1,108 @@
-# Welcome to your Lovable project
+# Mystery Publishers - Manuscript Flow
 
-## Project info
+A comprehensive platform for managing manuscript editing workflows for Mystery Publishers.
 
-**URL**: https://lovable.dev/projects/c03f10bc-4e52-41cb-ba60-88d7fe686849
+## About the Project
 
-## How can I edit this code?
+The Manuscript Flow platform facilitates the entire publishing process, connecting writers, editors, and administrators in a streamlined workflow to enhance manuscript quality and publishing efficiency.
 
-There are several ways of editing your application.
+## Key Features
 
-**Use Lovable**
+- **Role-Based Access**: Separate interfaces for writers, editors, and administrators
+- **Manuscript Management**: Upload, track, and manage manuscript editing progress
+- **Communication Tools**: Integrated messaging between writers and editors
+- **Editorial Workflow**: Assignment management and live editing features
+- **Marketplace**: Connect writers with editors and publishers
+- **Payment Processing**: Manage transactions between platform users
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/c03f10bc-4e52-41cb-ba60-88d7fe686849) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
+## Technologies Used
 
 This project is built with:
 
-- Vite
-- TypeScript
 - React
-- shadcn-ui
+- TypeScript
+- Vite
 - Tailwind CSS
+- shadcn/ui components
+- React Router
+- React Query
 
-## How can I deploy this project?
+## Getting Started
 
-Simply open [Lovable](https://lovable.dev/projects/c03f10bc-4e52-41cb-ba60-88d7fe686849) and click on Share -> Publish.
+### Prerequisites
 
-## Can I connect a custom domain to my Lovable project?
+- Node.js (v16 or later)
+- npm or yarn
 
-Yes, you can!
+### Installation
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```sh
+# Clone the repository
+git clone <repository-url>
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+# Navigate to the project directory
+cd manuscript-flow-canvas
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
+```
+
+## Development
+
+The application follows a component-based architecture with:
+
+- Role-specific dashboards
+- Shared UI components
+- Context-based state management
+- Responsive design for all devices
+
+## Project Structure
+
+- `/src/components`: Reusable UI components
+- `/src/pages`: Main application views
+- `/src/contexts`: State management
+- `/src/lib`: Utility functions
+- `/src/hooks`: Custom React hooks
+
+## Deployment
+
+### Build for Production
+
+Build the project for production:
+
+```sh
+npm run build
+```
+
+The build output will be in the `dist` directory, ready to be deployed to any static hosting service.
+
+### Deploying to Vercel
+
+The project is configured for easy deployment to Vercel. To deploy:
+
+1. **Push your code to GitHub**
+
+2. **Connect to Vercel**:
+   - Log in to [Vercel](https://vercel.com)
+   - Click "New Project"
+   - Import your GitHub repository
+   - Select "Vite" as the framework preset
+   - Keep the default build settings (they will match our configuration)
+   - Click "Deploy"
+
+3. **Environment Variables**:
+   - If your application requires environment variables, add them in the Vercel project settings.
+
+4. **Custom Domain**:
+   - Once deployed, you can add a custom domain in the project settings.
+
+### Continuous Deployment
+
+Vercel automatically redeploys your application every time you push changes to your repository.
+
+## Contact
+
+For any inquiries, please contact Mystery Publishers.

@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useAuth, UserRole } from "@/contexts/AuthContext";
 import { cn } from "@/lib/utils";
@@ -201,95 +200,84 @@ const MainSidebar: React.FC = () => {
         isCollapsed ? "w-[80px]" : "w-[240px]"
       )}
     >
-      <div className="flex items-center justify-between p-4">
-        <div className={cn("flex items-center gap-2", isCollapsed && "justify-center w-full")}>
-          <div className={cn("w-8 h-8 rounded-full flex items-center justify-center text-white", roleColor)}>
-            {user.role === "writer" && "W"}
-            {user.role === "editor" && "E"}
-            {user.role === "admin" && "A"}
-          </div>
+      <div className="flex items-center justify-between py-4 px-4">
+        <Link to="/" className={cn("flex items-center", isCollapsed && "justify-center")}>
           {!isCollapsed && (
-            <span className="font-semibold font-nunito">Mystery Publishers</span>
+            <h1 className="text-xl font-playfair font-bold text-[#c42127]">Mystery Publishers</h1>
           )}
-        </div>
+          {isCollapsed && (
+            <h1 className="text-xl font-playfair font-bold text-[#c42127]">MP</h1>
+          )}
+        </Link>
         <Button 
           variant="ghost" 
           size="sm" 
+          className="p-0 h-8 w-8 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className={cn("p-1 h-auto", isCollapsed && "hidden")}
         >
-          <ChevronLeft size={16} />
+          {isCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
         </Button>
       </div>
 
-      {isCollapsed && (
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          className="mx-auto my-2 p-1 h-auto"
-        >
-          <ChevronRight size={16} />
-        </Button>
-      )}
-
-      <div className="flex-1 px-3 py-4 flex flex-col gap-1">
-        {links.map((link) => (
-          <SidebarLink
-            key={link.to}
-            to={link.to}
-            icon={link.icon}
-            label={link.label}
-            isCollapsed={isCollapsed}
-            isActive={link.isActive}
-          />
-        ))}
-      </div>
-
-      <div className="mt-auto border-t p-3">
+      <div className={cn("flex items-center gap-3 py-4 px-4 border-t border-b border-sidebar-border",
+        isCollapsed && "justify-center"
+      )}>
         <div className={cn(
-          "flex items-center gap-3 mb-3", 
-          isCollapsed ? "flex-col" : "flex-row"
+          "w-8 h-8 rounded-full flex items-center justify-center overflow-hidden",
+          roleColor
         )}>
-          <div className="relative">
-            {user.avatar ? (
-              <img 
-                src={user.avatar} 
-                alt={user.name} 
-                className="w-8 h-8 rounded-full"
-              />
-            ) : (
-              <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground">
-                {user.name.charAt(0)}
-              </div>
-            )}
-            <span 
-              className={cn(
-                "absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-sidebar", 
-                "bg-success"
-              )} 
+          {user.avatar ? (
+            <img 
+              src={user.avatar} 
+              alt={user.name} 
+              className="w-full h-full object-cover" 
             />
-          </div>
-          {!isCollapsed && (
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium truncate">{user.name}</p>
-              <p className="text-xs text-muted-foreground capitalize">{user.role}</p>
-            </div>
+          ) : (
+            <span className="text-white font-medium">
+              {user.name.charAt(0).toUpperCase()}
+            </span>
           )}
         </div>
         
-        <Button 
-          variant="ghost" 
-          size="sm"
-          onClick={() => logout()}
-          className={cn(
-            "w-full text-muted-foreground gap-2 hover:bg-destructive/10 hover:text-destructive",
-            isCollapsed && "p-2 h-9"
-          )}
+        {!isCollapsed && (
+          <div className="flex-1 min-w-0">
+            <p className="font-medium text-sm truncate">{user.name}</p>
+            <p className="text-xs text-sidebar-foreground/70 truncate capitalize">
+              {user.role}
+              {user.balance !== undefined && (
+                <> • ${user.balance.toFixed(2)}</>
+              )}
+            </p>
+          </div>
+        )}
+      </div>
+
+      <nav className="flex-1 overflow-y-auto py-4 px-3">
+        <ul className="space-y-1">
+          {links.map((link) => (
+            <li key={link.to}>
+              <SidebarLink
+                to={link.to}
+                icon={link.icon}
+                label={link.label}
+                isCollapsed={isCollapsed}
+                isActive={link.isActive}
+              />
+            </li>
+          ))}
+        </ul>
+      </nav>
+      
+      <div className="py-4 px-3 border-t border-sidebar-border">
+        <button
+          onClick={logout}
+          className="flex items-center gap-3 rounded-lg px-3 py-2 w-full text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-all duration-300 ease-in-out"
         >
-          <LogOut size={16} />
-          {!isCollapsed && <span>Logout</span>}
-        </Button>
+          <LogOut size={20} />
+          <span className={cn(isCollapsed ? "opacity-0 w-0" : "opacity-100")}>
+            Log Out
+          </span>
+        </button>
       </div>
     </aside>
   );

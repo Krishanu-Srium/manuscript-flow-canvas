@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useAuth, UserRole } from "@/contexts/AuthContext";
 import { Input } from "@/components/ui/input";
@@ -40,8 +39,8 @@ const Login: React.FC = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted p-4">
       <div className="w-full max-w-md space-y-8">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-foreground">Script Master</h1>
-          <p className="mt-2 text-muted-foreground">The complete platform for script editing and publishing</p>
+          <h1 className="text-4xl font-bold font-playfair text-brand-red">Mystery Publishers</h1>
+          <p className="mt-2 text-muted-foreground">The complete platform for manuscript editing and publishing</p>
         </div>
         
         <Card className="w-full">
@@ -79,7 +78,7 @@ const Login: React.FC = () => {
                   required
                 />
               </div>
-              <Button className="w-full" type="submit" disabled={isLoading}>
+              <Button className="w-full bg-brand-red hover:bg-brand-red/90" type="submit" disabled={isLoading}>
                 {isLoading ? "Signing in..." : "Sign In"}
               </Button>
             </form>

@@ -1,5 +1,12 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Adding Futura font - fallback to system sans-serif if Futura is not available */
+@font-face {
+  font-family: 'Futura Bk BT';
+  src: local('Futura Bk BT Book'), local('Futura Book'), local('Futura');
+  font-weight: normal;
+  font-style: normal;
+}
 
 @tailwind base;
 @tailwind components;
@@ -94,11 +101,28 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Futura Bk BT', 'Futura', sans-serif;
   }
   
   h1, h2, h3, h4, h5, h6 {
     @apply font-playfair font-semibold;
+  }
+
+  /* Text color styles based on brand colors */
+  .text-brand-red {
+    color: #c42127;
+  }
+
+  .text-brand-black {
+    color: #41434d;
+  }
+
+  .bg-brand-red {
+    background-color: #c42127;
+  }
+
+  .bg-brand-black {
+    background-color: #41434d;
   }
 }
 
