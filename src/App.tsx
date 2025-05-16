@@ -6,10 +6,13 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import WriterDashboard from "./pages/WriterDashboard";
 import EditorDashboard from "./pages/EditorDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import UploadScript from "./pages/UploadScript";
+import MyScripts from "./pages/MyScripts";
+import Messages from "./pages/Messages";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -47,6 +50,7 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
       <Route 
         path="/" 
         element={
@@ -60,6 +64,22 @@ const AppRoutes = () => {
         element={
           <ProtectedRoute>
             <UploadScript />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/my-scripts" 
+        element={
+          <ProtectedRoute>
+            <MyScripts />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/messages" 
+        element={
+          <ProtectedRoute>
+            <Messages />
           </ProtectedRoute>
         } 
       />

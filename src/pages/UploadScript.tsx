@@ -1,5 +1,5 @@
 
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,11 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { 
-  Upload, 
-  File, 
-  X, 
   Check, 
-  FileText 
+  FileText,
+  Link as LinkIcon
 } from "lucide-react";
 import { toast } from "sonner";
 import { Progress } from "@/components/ui/progress";
@@ -28,57 +26,12 @@ const UploadScript: React.FC = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [genre, setGenre] = useState("");
-  const [file, setFile] = useState<File | null>(null);
-  const [isDragging, setIsDragging] = useState(false);
+  const [docsLink, setDocsLink] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [coverImage, setCoverImage] = useState<File | null>(null);
   const [coverPreview, setCoverPreview] = useState<string | null>(null);
-  
-  const onDragOver = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(true);
-  }, []);
-  
-  const onDragLeave = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-  }, []);
-  
-  const onDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-    
-    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      const droppedFile = e.dataTransfer.files[0];
-      if (droppedFile.type === "application/pdf" || 
-          droppedFile.type === "application/msword" || 
-          droppedFile.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
-        setFile(droppedFile);
-        toast.success(`File added: ${droppedFile.name}`);
-      } else {
-        toast.error("Please upload a PDF or Word document");
-      }
-    }
-  }, []);
-  
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      const selectedFile = e.target.files[0];
-      if (selectedFile.type === "application/pdf" || 
-          selectedFile.type === "application/msword" || 
-          selectedFile.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
-        setFile(selectedFile);
-        toast.success(`File added: ${selectedFile.name}`);
-      } else {
-        toast.error("Please upload a PDF or Word document");
-      }
-    }
-  };
-  
-  const handleRemoveFile = () => {
-    setFile(null);
-  };
+  const [chapterCount, setChapterCount] = useState<number>(1);
   
   const handleCoverImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -102,12 +55,27 @@ const UploadScript: React.FC = () => {
     setCoverImage(null);
     setCoverPreview(null);
   };
+
+  const validateGoogleDocsLink = (link: string) => {
+    // Basic validation for Google Docs link
+    return link.includes("docs.google.com");
+  };
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!title || !genre || !file) {
+    if (!title || !genre || !docsLink) {
       toast.error("Please fill in all required fields");
+      return;
+    }
+
+    if (!validateGoogleDocsLink(docsLink)) {
+      toast.error("Please enter a valid Google Docs link");
+      return;
+    }
+    
+    if (chapterCount < 1) {
+      toast.error("Number of chapters must be at least 1");
       return;
     }
     
@@ -130,9 +98,10 @@ const UploadScript: React.FC = () => {
     setTitle("");
     setDescription("");
     setGenre("");
-    setFile(null);
+    setDocsLink("");
     setCoverImage(null);
     setCoverPreview(null);
+    setChapterCount(1);
   };
 
   return (
@@ -194,72 +163,50 @@ const UploadScript: React.FC = () => {
                   </SelectContent>
                 </Select>
               </div>
+              <div className="space-y-1">
+                <Label htmlFor="chapterCount">Number of Chapters <span className="text-destructive">*</span></Label>
+                <Input 
+                  id="chapterCount" 
+                  type="number" 
+                  min="1"
+                  placeholder="Enter the number of chapters" 
+                  value={chapterCount}
+                  onChange={(e) => setChapterCount(parseInt(e.target.value) || 1)}
+                  required
+                />
+              </div>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader>
-              <CardTitle>Upload Manuscript</CardTitle>
+              <CardTitle>Google Docs Link</CardTitle>
               <CardDescription>
-                Upload your script file (PDF or Word document)
+                Provide the link to your manuscript on Google Docs
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {!file ? (
-                <div
-                  onDragOver={onDragOver}
-                  onDragLeave={onDragLeave}
-                  onDrop={onDrop}
-                  className={`
-                    border-2 border-dashed rounded-lg p-10 transition-all duration-200
-                    flex flex-col items-center justify-center text-center
-                    ${isDragging ? 'border-writer-primary bg-writer-primary/5' : 'border-muted'}
-                    hover:bg-muted/40
-                  `}
-                >
-                  <Upload className="text-muted-foreground mb-4" size={40} />
-                  <p className="mb-2 font-medium">Drag and drop your file here</p>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Supported formats: PDF, DOC, DOCX
-                  </p>
-                  <Button type="button" variant="outline" className="gap-2" onClick={() => document.getElementById('file-upload')?.click()}>
-                    <File size={16} />
-                    <span>Browse Files</span>
-                    <input
-                      id="file-upload"
-                      type="file"
-                      accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                      className="hidden"
-                      onChange={handleFileChange}
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="docsLink">Google Docs Link <span className="text-destructive">*</span></Label>
+                  <div className="flex relative">
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-muted-foreground">
+                      <LinkIcon size={16} />
+                    </span>
+                    <Input 
+                      id="docsLink" 
+                      className="pl-10"
+                      placeholder="https://docs.google.com/document/d/..." 
+                      value={docsLink}
+                      onChange={(e) => setDocsLink(e.target.value)}
+                      required
                     />
-                  </Button>
-                </div>
-              ) : (
-                <div className="border rounded-lg p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="bg-writer-primary/10 w-10 h-10 rounded-lg flex items-center justify-center text-writer-primary">
-                        <FileText size={24} />
-                      </div>
-                      <div>
-                        <p className="font-medium">{file.name}</p>
-                        <p className="text-sm text-muted-foreground">
-                          {(file.size / (1024 * 1024)).toFixed(2)} MB
-                        </p>
-                      </div>
-                    </div>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="icon"
-                      onClick={handleRemoveFile}
-                      className="text-muted-foreground hover:text-destructive"
-                    >
-                      <X size={18} />
-                    </Button>
                   </div>
+                  <p className="text-xs text-muted-foreground">
+                    Please make sure your Google Doc is shared with edit access to anyone with the link
+                  </p>
                 </div>
-              )}
+              </div>
             </CardContent>
           </Card>
 
@@ -300,8 +247,7 @@ const UploadScript: React.FC = () => {
                       onClick={handleRemoveCover}
                       className="gap-2"
                     >
-                      <X size={14} />
-                      <span>Remove Image</span>
+                      Remove Image
                     </Button>
                   )}
                 </div>

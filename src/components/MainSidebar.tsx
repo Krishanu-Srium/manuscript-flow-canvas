@@ -164,7 +164,7 @@ const MainSidebar: React.FC = () => {
             {user.role === "admin" && "A"}
           </div>
           {!isCollapsed && (
-            <span className="font-semibold font-nunito">Script Master</span>
+            <span className="font-semibold font-nunito">Mystery Publishers</span>
           )}
         </div>
         <Button 
