@@ -9,6 +9,7 @@ interface User {
   email: string;
   role: UserRole;
   avatar?: string;
+  balance?: number; // User's current balance
 }
 
 interface AuthContextType {
@@ -18,6 +19,7 @@ interface AuthContextType {
   signup: (name: string, email: string, password: string, role?: UserRole) => Promise<void>;
   logout: () => void;
   setDemoUser: (role: UserRole) => void;
+  updateUserBalance: (amount: number) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -29,21 +31,24 @@ const demoUsers: Record<UserRole, User> = {
     name: "Sarah Johnson",
     email: "sarah@example.com",
     role: "writer",
-    avatar: "https://i.pravatar.cc/150?img=32"
+    avatar: "https://i.pravatar.cc/150?img=32",
+    balance: 1250.00
   },
   editor: {
     id: "e1",
     name: "Mark Davis",
     email: "mark@example.com",
     role: "editor",
-    avatar: "https://i.pravatar.cc/150?img=61"
+    avatar: "https://i.pravatar.cc/150?img=61",
+    balance: 2450.75
   },
   admin: {
     id: "a1",
     name: "Priya Sharma",
     email: "priya@example.com",
     role: "admin",
-    avatar: "https://i.pravatar.cc/150?img=48"
+    avatar: "https://i.pravatar.cc/150?img=48",
+    balance: 5000.00
   }
 };
 
@@ -72,7 +77,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       name,
       email,
       role,
-      avatar: `https://i.pravatar.cc/150?u=${email}` // Generate placeholder avatar
+      avatar: `https://i.pravatar.cc/150?u=${email}`, // Generate placeholder avatar
+      balance: 0.00 // New users start with zero balance
     };
     
     // For demo, log in the user automatically after signup
@@ -87,6 +93,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setUser(demoUsers[role]);
   };
 
+  const updateUserBalance = (amount: number) => {
+    if (user) {
+      setUser({
+        ...user,
+        balance: (user.balance || 0) + amount
+      });
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -95,7 +110,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         login,
         signup,
         logout,
-        setDemoUser
+        setDemoUser,
+        updateUserBalance
       }}
     >
       {children}

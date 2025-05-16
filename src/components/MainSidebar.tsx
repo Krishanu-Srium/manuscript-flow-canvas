@@ -15,7 +15,9 @@ import {
   ChevronLeft,
   ChevronRight,
   MessageSquare,
-  Edit
+  Edit,
+  ShoppingBag,
+  CreditCard
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -85,6 +87,13 @@ const getRoleSpecificLinks = (role: UserRole, pathname: string) => {
       isActive: pathname === "/messages",
       forRoles: ["writer", "editor"] as UserRole[]
     },
+    {
+      to: "/marketplace",
+      icon: <ShoppingBag size={20} />,
+      label: "Marketplace",
+      isActive: pathname === "/marketplace",
+      forRoles: ["writer"] as UserRole[]
+    },
   ];
 
   const editorLinks = [
@@ -108,7 +117,14 @@ const getRoleSpecificLinks = (role: UserRole, pathname: string) => {
       label: "Messages",
       isActive: pathname === "/messages",
       forRoles: ["editor"] as UserRole[]
-    }
+    },
+    {
+      to: "/marketplace",
+      icon: <ShoppingBag size={20} />,
+      label: "Marketplace",
+      isActive: pathname === "/marketplace",
+      forRoles: ["editor"] as UserRole[]
+    },
   ];
 
   const adminLinks = [
@@ -133,9 +149,23 @@ const getRoleSpecificLinks = (role: UserRole, pathname: string) => {
       isActive: pathname === "/reports",
       forRoles: ["admin"] as UserRole[]
     },
+    {
+      to: "/marketplace",
+      icon: <ShoppingBag size={20} />,
+      label: "Marketplace",
+      isActive: pathname === "/marketplace",
+      forRoles: ["admin"] as UserRole[]
+    },
   ];
 
-  const settingsLink = [
+  const commonLinks = [
+    {
+      to: "/payments",
+      icon: <CreditCard size={20} />,
+      label: "Payments",
+      isActive: pathname === "/payments",
+      forRoles: ["writer", "editor", "admin"] as UserRole[]
+    },
     {
       to: "/settings",
       icon: <Settings size={20} />,
@@ -145,7 +175,7 @@ const getRoleSpecificLinks = (role: UserRole, pathname: string) => {
     }
   ];
 
-  const allLinks = [...baseLinks, ...writerLinks, ...editorLinks, ...adminLinks, ...settingsLink];
+  const allLinks = [...baseLinks, ...writerLinks, ...editorLinks, ...adminLinks, ...commonLinks];
   return allLinks.filter((link) => link.forRoles.includes(role));
 };
 

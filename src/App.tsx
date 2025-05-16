@@ -15,6 +15,10 @@ import MyScripts from "./pages/MyScripts";
 import Messages from "./pages/Messages";
 import Assignments from "./pages/Assignments";
 import LiveEdits from "./pages/LiveEdits";
+import WriterMarketplace from "./pages/WriterMarketplace";
+import EditorMarketplace from "./pages/EditorMarketplace";
+import PublisherMarketplace from "./pages/PublisherMarketplace";
+import Payments from "./pages/Payments";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -43,6 +47,24 @@ const DashboardRouter = () => {
       return <EditorDashboard />;
     case "admin":
       return <AdminDashboard />;
+    default:
+      return <Navigate to="/login" replace />;
+  }
+};
+
+// Role-specific marketplace routing
+const MarketplaceRouter = () => {
+  const { user } = useAuth();
+  
+  if (!user) return <Navigate to="/login" replace />;
+  
+  switch (user.role) {
+    case "writer":
+      return <WriterMarketplace />;
+    case "editor":
+      return <EditorMarketplace />;
+    case "admin":
+      return <PublisherMarketplace />;
     default:
       return <Navigate to="/login" replace />;
   }
@@ -98,6 +120,22 @@ const AppRoutes = () => {
         element={
           <ProtectedRoute>
             <LiveEdits />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/marketplace" 
+        element={
+          <ProtectedRoute>
+            <MarketplaceRouter />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/payments" 
+        element={
+          <ProtectedRoute>
+            <Payments />
           </ProtectedRoute>
         } 
       />
