@@ -13,6 +13,8 @@ import AdminDashboard from "./pages/AdminDashboard";
 import UploadScript from "./pages/UploadScript";
 import MyScripts from "./pages/MyScripts";
 import Messages from "./pages/Messages";
+import Assignments from "./pages/Assignments";
+import LiveEdits from "./pages/LiveEdits";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -80,6 +82,22 @@ const AppRoutes = () => {
         element={
           <ProtectedRoute>
             <Messages />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/assignments" 
+        element={
+          <ProtectedRoute>
+            <Assignments />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/live-edits" 
+        element={
+          <ProtectedRoute>
+            <LiveEdits />
           </ProtectedRoute>
         } 
       />

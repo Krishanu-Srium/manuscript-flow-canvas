@@ -14,7 +14,8 @@ import {
   LogOut, 
   ChevronLeft,
   ChevronRight,
-  MessageSquare
+  MessageSquare,
+  Edit
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -92,6 +93,20 @@ const getRoleSpecificLinks = (role: UserRole, pathname: string) => {
       icon: <FileEdit size={20} />,
       label: "Assignments",
       isActive: pathname === "/assignments",
+      forRoles: ["editor"] as UserRole[]
+    },
+    {
+      to: "/live-edits",
+      icon: <Edit size={20} />,
+      label: "Live Edits",
+      isActive: pathname === "/live-edits",
+      forRoles: ["editor"] as UserRole[]
+    },
+    {
+      to: "/messages",
+      icon: <MessageSquare size={20} />,
+      label: "Messages",
+      isActive: pathname === "/messages",
       forRoles: ["editor"] as UserRole[]
     }
   ];

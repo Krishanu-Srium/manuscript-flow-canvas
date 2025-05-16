@@ -15,6 +15,7 @@ interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<void>;
+  signup: (name: string, email: string, password: string, role?: UserRole) => Promise<void>;
   logout: () => void;
   setDemoUser: (role: UserRole) => void;
 }
@@ -59,6 +60,25 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setUser(demoUsers.writer);
   };
 
+  const signup = async (name: string, email: string, password: string, role: UserRole = "writer"): Promise<void> => {
+    // This would be replaced by actual signup logic
+    console.log("Signup attempt with", { name, email, password, role });
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    
+    // Create a new user
+    const newUser: User = {
+      id: `user-${Date.now()}`,
+      name,
+      email,
+      role,
+      avatar: `https://i.pravatar.cc/150?u=${email}` // Generate placeholder avatar
+    };
+    
+    // For demo, log in the user automatically after signup
+    setUser(newUser);
+  };
+
   const logout = () => {
     setUser(null);
   };
@@ -73,6 +93,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         user,
         isAuthenticated: !!user,
         login,
+        signup,
         logout,
         setDemoUser
       }}
