@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import DashboardLayout from "@/components/DashboardLayout";
 import { useAuth } from "@/contexts/AuthContext";
@@ -157,7 +158,7 @@ const Payments: React.FC = () => {
     user ? getTransactionsByRole(user.role) : []
   );
   const [paymentRequests, setPaymentRequests] = useState<PendingPayment[]>(
-    user?.role === "admin" ? pendingPayments : []
+    user?.role === "publisher" ? pendingPayments : [] // Changed from "admin" to "publisher"
   );
   
   const [showAddFundsDialog, setShowAddFundsDialog] = useState(false);
@@ -296,7 +297,7 @@ const Payments: React.FC = () => {
                             <Button 
                               onClick={() => processPayment(payment.id)}
                               size="sm"
-                              className="bg-admin-primary hover:bg-admin-primary/90"
+                              className="bg-publisher-primary hover:bg-publisher-primary/90"
                             >
                               Pay Now
                             </Button>
@@ -401,7 +402,7 @@ const Payments: React.FC = () => {
                   <TableRow>
                     <TableHead>Date</TableHead>
                     <TableHead>Description</TableHead>
-                    <TableHead>{user.role === "admin" ? "User" : "From/To"}</TableHead>
+                    <TableHead>{user.role === "publisher" ? "User" : "From/To"}</TableHead>
                     <TableHead>Amount</TableHead>
                     <TableHead>Type</TableHead>
                     <TableHead>Status</TableHead>
