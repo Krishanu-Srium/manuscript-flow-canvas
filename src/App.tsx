@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -19,6 +18,7 @@ import WriterMarketplace from "./pages/WriterMarketplace";
 import EditorMarketplace from "./pages/EditorMarketplace";
 import PublisherMarketplace from "./pages/PublisherMarketplace";
 import Payments from "./pages/Payments";
+import Manuscripts from "./pages/Manuscripts";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -136,6 +136,14 @@ const AppRoutes = () => {
         element={
           <ProtectedRoute>
             <Payments />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/manuscripts" 
+        element={
+          <ProtectedRoute>
+            <Manuscripts />
           </ProtectedRoute>
         } 
       />
