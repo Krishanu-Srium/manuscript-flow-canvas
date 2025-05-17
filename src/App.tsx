@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,7 +9,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import WriterDashboard from "./pages/WriterDashboard";
 import EditorDashboard from "./pages/EditorDashboard";
-import AdminDashboard from "./pages/AdminDashboard";
+import PublisherDashboard from "./pages/AdminDashboard";
 import UploadScript from "./pages/UploadScript";
 import MyScripts from "./pages/MyScripts";
 import Messages from "./pages/Messages";
@@ -45,8 +46,8 @@ const DashboardRouter = () => {
       return <WriterDashboard />;
     case "editor":
       return <EditorDashboard />;
-    case "admin":
-      return <AdminDashboard />;
+    case "publisher":
+      return <PublisherDashboard />;
     default:
       return <Navigate to="/login" replace />;
   }
@@ -63,7 +64,7 @@ const MarketplaceRouter = () => {
       return <WriterMarketplace />;
     case "editor":
       return <EditorMarketplace />;
-    case "admin":
+    case "publisher":
       return <PublisherMarketplace />;
     default:
       return <Navigate to="/login" replace />;

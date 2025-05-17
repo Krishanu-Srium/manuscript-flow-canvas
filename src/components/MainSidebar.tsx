@@ -60,7 +60,7 @@ const getRoleSpecificLinks = (role: UserRole, pathname: string) => {
       icon: <LayoutDashboard size={20} />,
       label: "Dashboard",
       isActive: pathname === "/",
-      forRoles: ["writer", "editor", "admin"] as UserRole[]
+      forRoles: ["writer", "editor", "publisher"] as UserRole[]
     }
   ];
 
@@ -126,34 +126,20 @@ const getRoleSpecificLinks = (role: UserRole, pathname: string) => {
     },
   ];
 
-  const adminLinks = [
+  const publisherLinks = [
     {
       to: "/manuscripts",
       icon: <BookOpen size={20} />,
       label: "Manuscripts",
       isActive: pathname === "/manuscripts",
-      forRoles: ["admin"] as UserRole[]
-    },
-    {
-      to: "/editors",
-      icon: <Users size={20} />,
-      label: "Editors",
-      isActive: pathname === "/editors",
-      forRoles: ["admin"] as UserRole[]
-    },
-    {
-      to: "/reports",
-      icon: <BarChart size={20} />,
-      label: "Reports",
-      isActive: pathname === "/reports",
-      forRoles: ["admin"] as UserRole[]
+      forRoles: ["publisher"] as UserRole[]
     },
     {
       to: "/marketplace",
       icon: <ShoppingBag size={20} />,
       label: "Marketplace",
       isActive: pathname === "/marketplace",
-      forRoles: ["admin"] as UserRole[]
+      forRoles: ["publisher"] as UserRole[]
     },
   ];
 
@@ -163,18 +149,18 @@ const getRoleSpecificLinks = (role: UserRole, pathname: string) => {
       icon: <CreditCard size={20} />,
       label: "Payments",
       isActive: pathname === "/payments",
-      forRoles: ["writer", "editor", "admin"] as UserRole[]
+      forRoles: ["writer", "editor", "publisher"] as UserRole[]
     },
     {
       to: "/settings",
       icon: <Settings size={20} />,
       label: "Settings",
       isActive: pathname === "/settings",
-      forRoles: ["writer", "editor", "admin"] as UserRole[]
+      forRoles: ["writer", "editor", "publisher"] as UserRole[]
     }
   ];
 
-  const allLinks = [...baseLinks, ...writerLinks, ...editorLinks, ...adminLinks, ...commonLinks];
+  const allLinks = [...baseLinks, ...writerLinks, ...editorLinks, ...publisherLinks, ...commonLinks];
   return allLinks.filter((link) => link.forRoles.includes(role));
 };
 
@@ -190,7 +176,7 @@ const MainSidebar: React.FC = () => {
   const roleColor = {
     writer: "bg-writer-primary",
     editor: "bg-editor-primary",
-    admin: "bg-admin-primary"
+    publisher: "bg-admin-primary"
   }[user.role];
 
   return (

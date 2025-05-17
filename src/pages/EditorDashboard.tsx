@@ -14,8 +14,7 @@ import {
   TrendingUp
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
+import ChapterProgressList from "@/components/ChapterProgressList";
 
 // Sample data for the editor dashboard
 const assignedScripts = [
@@ -23,59 +22,48 @@ const assignedScripts = [
     id: 1, 
     title: "The Lost Chapter", 
     author: "Sarah Johnson",
+    authorId: "w1",
     deadline: "May 20, 2025", 
-    status: "In Progress", 
-    progress: 65,
-    priority: "Medium" 
+    priority: "Medium",
+    chapters: [
+      { id: 1, title: "The Beginning", progress: 100, status: "Completed" },
+      { id: 2, title: "The Discovery", progress: 75, status: "In Progress" },
+      { id: 3, title: "The Journey", progress: 50, status: "In Progress" },
+      { id: 4, title: "The Revelation", progress: 30, status: "In Progress" },
+      { id: 5, title: "The End", progress: 0, status: "Not Started" },
+    ]
   },
   { 
     id: 2, 
     title: "Beyond the Stars", 
     author: "Michael Chen",
+    authorId: "w2",
     deadline: "May 18, 2025", 
-    status: "Not Started", 
-    progress: 0,
-    priority: "High" 
+    priority: "High",
+    chapters: [
+      { id: 1, title: "First Contact", progress: 0, status: "Not Started" },
+      { id: 2, title: "Alien Civilization", progress: 0, status: "Not Started" },
+      { id: 3, title: "Return Home", progress: 0, status: "Not Started" },
+    ]
   },
   { 
     id: 3, 
     title: "Shadows of Tomorrow", 
     author: "Elena Rodriguez",
+    authorId: "w3",
     deadline: "May 30, 2025", 
-    status: "In Progress", 
-    progress: 25,
-    priority: "Low" 
+    priority: "Low",
+    chapters: [
+      { id: 1, title: "Darkness Falls", progress: 30, status: "In Progress" },
+      { id: 2, title: "The Light Within", progress: 20, status: "In Progress" },
+      { id: 3, title: "Dawn", progress: 0, status: "Not Started" },
+      { id: 4, title: "New Day", progress: 0, status: "Not Started" },
+    ]
   },
 ];
 
 const EditorDashboard: React.FC = () => {
   const { user } = useAuth();
-
-  const getPriorityBadge = (priority: string) => {
-    switch (priority) {
-      case "High":
-        return <Badge variant="destructive">{priority}</Badge>;
-      case "Medium":
-        return <Badge variant="outline" className="bg-amber-100 text-amber-800 border-amber-200">{priority}</Badge>;
-      case "Low":
-        return <Badge variant="outline" className="bg-blue-100 text-blue-800 border-blue-200">{priority}</Badge>;
-      default:
-        return <Badge variant="outline">{priority}</Badge>;
-    }
-  };
-
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case "Completed":
-        return <CheckCircle className="text-success" size={18} />;
-      case "In Progress":
-        return <Clock className="text-amber-500" size={18} />;
-      case "Not Started":
-        return <AlertCircle className="text-blue-500" size={18} />;
-      default:
-        return null;
-    }
-  };
 
   return (
     <DashboardLayout role="editor">
@@ -135,39 +123,7 @@ const EditorDashboard: React.FC = () => {
           <CardContent>
             <div className="space-y-4">
               {assignedScripts.map((script) => (
-                <div key={script.id} className="p-4 border rounded-lg hover:bg-muted/30 transition-colors">
-                  <div className="flex flex-wrap justify-between items-start gap-2 mb-3">
-                    <div>
-                      <h4 className="font-medium text-lg">{script.title}</h4>
-                      <p className="text-sm text-muted-foreground">by {script.author}</p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {getPriorityBadge(script.priority)}
-                      <Badge variant="outline" className="flex items-center gap-1">
-                        {getStatusIcon(script.status)}
-                        <span>{script.status}</span>
-                      </Badge>
-                    </div>
-                  </div>
-                  
-                  <div className="mb-3">
-                    <div className="flex justify-between text-sm mb-1">
-                      <span>Progress</span>
-                      <span>{script.progress}%</span>
-                    </div>
-                    <Progress value={script.progress} className="h-2" />
-                  </div>
-                  
-                  <div className="flex justify-between items-center">
-                    <div className="text-sm flex items-center gap-1">
-                      <Clock size={14} className="text-muted-foreground" />
-                      <span className="text-muted-foreground">Due: {script.deadline}</span>
-                    </div>
-                    <Button asChild size="sm" className="bg-editor-primary hover:bg-editor-accent">
-                      <Link to={`/assignments/${script.id}`}>Edit</Link>
-                    </Button>
-                  </div>
-                </div>
+                <ChapterProgressList key={script.id} manuscript={script} />
               ))}
             </div>
           </CardContent>

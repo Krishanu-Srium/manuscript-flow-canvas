@@ -1,7 +1,6 @@
-
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
-export type UserRole = "writer" | "editor" | "admin";
+export type UserRole = "writer" | "editor" | "publisher";
 
 interface User {
   id: string;
@@ -42,11 +41,11 @@ const demoUsers: Record<UserRole, User> = {
     avatar: "https://i.pravatar.cc/150?img=61",
     balance: 2450.75
   },
-  admin: {
+  publisher: {
     id: "a1",
     name: "Priya Sharma",
     email: "priya@example.com",
-    role: "admin",
+    role: "publisher",
     avatar: "https://i.pravatar.cc/150?img=48",
     balance: 5000.00
   }
