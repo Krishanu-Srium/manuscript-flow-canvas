@@ -1,9 +1,10 @@
+
 import React, { useState } from "react";
 import { useAuth, UserRole } from "@/contexts/AuthContext";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "sonner";
 
 const Login: React.FC = () => {
@@ -20,7 +21,7 @@ const Login: React.FC = () => {
     try {
       await login(email, password);
       toast.success("Login successful!");
-      navigate("/");
+      navigate("/dashboard");
     } catch (error) {
       toast.error("Login failed. Please try again.");
       console.error(error);
@@ -32,7 +33,7 @@ const Login: React.FC = () => {
   const handleRoleSelect = (role: UserRole) => {
     setDemoUser(role);
     toast.success(`Logged in as ${role}`);
-    navigate("/");
+    navigate("/dashboard");
   };
 
   return (
@@ -109,6 +110,11 @@ const Login: React.FC = () => {
               >
                 Publisher
               </Button>
+            </div>
+            <div className="w-full text-center mt-6">
+              <Link to="/" className="text-sm text-muted-foreground hover:text-primary">
+                Return to home page
+              </Link>
             </div>
           </CardFooter>
         </Card>

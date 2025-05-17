@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -50,7 +51,7 @@ const ChapterProgressList: React.FC<ChapterProgressListProps> = ({ manuscript })
                 <div className="flex items-center space-x-2">
                   <Progress value={chapter.progress} className="w-24 h-2" />
                   <span className="text-xs text-muted-foreground">{chapter.progress}%</span>
-                  <Badge variant="ghost">{chapter.status}</Badge>
+                  <Badge variant="secondary">{chapter.status}</Badge>
                 </div>
               </li>
             ))}
