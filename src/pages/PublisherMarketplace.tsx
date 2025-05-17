@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import DashboardLayout from "@/components/DashboardLayout";
 import { useAuth } from "@/contexts/AuthContext";
@@ -11,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
-import { Dollar, Users } from "lucide-react";
+import { DollarSign, Users } from "lucide-react";
 
 interface Manuscript {
   id: string;
@@ -300,7 +299,7 @@ const PublisherMarketplace: React.FC = () => {
                           </div>
                           <div className="text-right">
                             <p className="text-lg font-bold flex items-center">
-                              <Dollar size={18} className="mr-1" />
+                              <DollarSign size={18} className="mr-1" />
                               {offer.fee}
                             </p>
                             <Button 
