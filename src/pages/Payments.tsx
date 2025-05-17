@@ -79,7 +79,7 @@ const getTransactionsByRole = (role: string): PaymentTransaction[] => {
           type: "incoming"
         }
       ];
-    case "admin": // Publisher
+    case "publisher": // Changed from "admin" to "publisher"
       return [
         {
           id: "t5",
@@ -261,7 +261,7 @@ const Payments: React.FC = () => {
 
   const getRoleSpecificContent = () => {
     switch (user.role) {
-      case "admin": // Publisher
+      case "publisher": // Changed from "admin" to "publisher"
         return (
           <>
             <Card>

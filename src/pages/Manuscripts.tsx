@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import DashboardLayout from "@/components/DashboardLayout";
@@ -156,7 +155,7 @@ const ManuscriptsPage: React.FC = () => {
   };
 
   return (
-    <DashboardLayout role="admin">
+    <DashboardLayout role="publisher">
       <div className="space-y-6 animate-fade-in">
         <div className="flex flex-wrap justify-between items-center gap-4">
           <div>

@@ -104,10 +104,10 @@ const Login: React.FC = () => {
               </Button>
               <Button 
                 variant="outline" 
-                className="flex-1 border-admin-primary text-admin-primary hover:bg-admin-primary hover:text-white"
-                onClick={() => handleRoleSelect("admin")}
+                className="flex-1 border-publisher-primary text-publisher-primary hover:bg-publisher-primary hover:text-white"
+                onClick={() => handleRoleSelect("publisher")}
               >
-                Admin
+                Publisher
               </Button>
             </div>
           </CardFooter>

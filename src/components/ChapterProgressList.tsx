@@ -1,39 +1,26 @@
-
-import React, { useState } from "react";
-import { 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardFooter, 
-  CardHeader, 
-  CardTitle 
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import React from "react";
+import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { 
-  ChevronDown, 
-  ChevronUp, 
-  CheckCircle, 
-  Clock, 
-  AlertCircle
-} from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-interface Chapter {
+export type ChapterStatus = "Not Started" | "In Progress" | "Completed";
+
+export interface Chapter {
   id: number;
   title: string;
   progress: number;
-  status: "Not Started" | "In Progress" | "Completed";
+  status: ChapterStatus;
 }
 
-interface ManuscriptWithChapters {
+export interface ManuscriptWithChapters {
   id: number;
   title: string;
   author: string;
   authorId: string;
   deadline: string;
+  priority: string;
   chapters: Chapter[];
-  priority: "High" | "Medium" | "Low";
 }
 
 interface ChapterProgressListProps {
@@ -41,107 +28,44 @@ interface ChapterProgressListProps {
 }
 
 const ChapterProgressList: React.FC<ChapterProgressListProps> = ({ manuscript }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case "Completed":
-        return <CheckCircle className="text-success" size={18} />;
-      case "In Progress":
-        return <Clock className="text-amber-500" size={18} />;
-      case "Not Started":
-        return <AlertCircle className="text-blue-500" size={18} />;
-      default:
-        return null;
-    }
-  };
-
-  const getStatusBadge = (status: string) => {
-    return (
-      <Badge variant="outline" className="flex items-center gap-1">
-        {getStatusIcon(status)}
-        <span>{status}</span>
-      </Badge>
-    );
-  };
-
-  const overallProgress = Math.round(
-    manuscript.chapters.reduce((acc, chapter) => acc + chapter.progress, 0) / manuscript.chapters.length
-  );
-
   return (
     <Card className="mb-4">
-      <CardHeader className="pb-2">
+      <CardContent className="space-y-3">
         <div className="flex justify-between items-start">
           <div>
-            <CardTitle>{manuscript.title}</CardTitle>
-            <CardDescription>by {manuscript.author}</CardDescription>
+            <h3 className="text-lg font-semibold">{manuscript.title}</h3>
+            <p className="text-sm text-muted-foreground">
+              By {manuscript.author}
+            </p>
           </div>
-          <Badge variant={manuscript.priority === "High" ? "destructive" : 
-                         manuscript.priority === "Medium" ? "default" : "outline"}>
-            {manuscript.priority} Priority
-          </Badge>
-        </div>
-      </CardHeader>
-      
-      <CardContent>
-        <div className="mb-4">
-          <div className="flex justify-between text-sm mb-1">
-            <span>Overall Progress</span>
-            <span>{overallProgress}%</span>
-          </div>
-          <Progress value={overallProgress} className="h-2" />
+          <Badge variant="secondary">Priority: {manuscript.priority}</Badge>
         </div>
         
-        <div className="text-sm text-muted-foreground mb-4">
-          <span className="flex items-center">
-            <Clock size={14} className="mr-1" /> Due: {manuscript.deadline}
-          </span>
-          <span className="mt-1 block">
-            {manuscript.chapters.length} {manuscript.chapters.length === 1 ? 'Chapter' : 'Chapters'}
-          </span>
-        </div>
-        
-        {isExpanded && (
-          <div className="mt-4 space-y-3 border-t pt-3">
-            <h4 className="text-sm font-medium mb-2">Chapter Progress</h4>
+        <div className="space-y-2">
+          <h4 className="text-sm font-medium">Chapters</h4>
+          <ul className="space-y-1">
             {manuscript.chapters.map((chapter) => (
-              <div key={chapter.id} className="border rounded-md p-3">
-                <div className="flex justify-between items-center mb-2">
-                  <h5 className="font-medium">Chapter {chapter.id}: {chapter.title}</h5>
-                  {getStatusBadge(chapter.status)}
+              <li key={chapter.id} className="flex items-center justify-between">
+                <span>{chapter.title}</span>
+                <div className="flex items-center space-x-2">
+                  <Progress value={chapter.progress} className="w-24 h-2" />
+                  <span className="text-xs text-muted-foreground">{chapter.progress}%</span>
+                  <Badge variant="ghost">{chapter.status}</Badge>
                 </div>
-                <div className="mb-1 flex justify-between text-xs">
-                  <span>Progress</span>
-                  <span>{chapter.progress}%</span>
-                </div>
-                <Progress value={chapter.progress} className="h-1.5" />
-              </div>
+              </li>
             ))}
-          </div>
-        )}
+          </ul>
+        </div>
+        
+        <div className="flex justify-between items-center">
+          <p className="text-sm text-muted-foreground">
+            Deadline: {manuscript.deadline}
+          </p>
+          <Button variant="outline" size="sm">
+            View Details
+          </Button>
+        </div>
       </CardContent>
-      
-      <CardFooter className="pt-0 flex justify-between">
-        <Button 
-          variant="outline" 
-          size="sm" 
-          className="w-full flex items-center justify-center gap-1"
-          onClick={() => setIsExpanded(!isExpanded)}
-        >
-          {isExpanded ? (
-            <>
-              <ChevronUp size={16} />
-              <span>Hide Chapters</span>
-            </>
-          ) : (
-            <>
-              <ChevronDown size={16} />
-              <span>View Chapters</span>
-            </>
-          )}
-        </Button>
-      </CardFooter>
     </Card>
   );
 };

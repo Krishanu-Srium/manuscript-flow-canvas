@@ -161,7 +161,7 @@ const PublisherMarketplace: React.FC = () => {
   if (!user) return null;
 
   return (
-    <DashboardLayout role="admin">
+    <DashboardLayout role="publisher">
       <div className="space-y-6">
         <div>
           <h1 className="text-3xl font-playfair">Publisher Marketplace</h1>

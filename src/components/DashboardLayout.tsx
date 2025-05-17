@@ -15,7 +15,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role = "wri
       "flex min-h-screen",
       role === "writer" && "writer-gradient",
       role === "editor" && "editor-gradient",
-      role === "admin" && "admin-gradient"
+      role === "publisher" && "publisher-gradient"
     )}>
       <MainSidebar />
       <main className="flex-1 p-6 overflow-auto font-inter">

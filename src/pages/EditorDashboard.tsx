@@ -14,10 +14,10 @@ import {
   TrendingUp
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import ChapterProgressList from "@/components/ChapterProgressList";
+import ChapterProgressList, { ManuscriptWithChapters, ChapterStatus } from "@/components/ChapterProgressList";
 
 // Sample data for the editor dashboard
-const assignedScripts = [
+const assignedScripts: ManuscriptWithChapters[] = [
   { 
     id: 1, 
     title: "The Lost Chapter", 
